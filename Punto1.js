@@ -18,7 +18,7 @@ async function crearArchivos(cantidad) {
     }
 
     await Promise.all(tareas);
-    console.log(`✅ Se generaron ${cantidad} archivos.`);
+    console.log(`Se generaron ${cantidad} archivos.`);
 }
 
 crearArchivos(1000);

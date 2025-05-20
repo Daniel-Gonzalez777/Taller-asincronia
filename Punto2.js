@@ -16,3 +16,32 @@ const serviciosMeteorologicos = [
     }
   }
 ];
+
+function consultarPronosticoDelTiempo() {
+  console.log("⏳ Consultando servicios meteorológicos...");
+
+  const solicitudes = serviciosMeteorologicos.map(servicio => {
+    return fetch(servicio.endpoint, {
+      headers: { 
+        'User-Agent': 'PronosticoApp/2.0'
+      }
+    })
+    .then(respuesta => respuesta.json())
+    .then(datos => servicio.extraerDatos(datos))
+    .catch(error => `Error con ${servicio.proveedor}: ${error.message}`);
+  });
+
+  Promise.race(solicitudes)
+    .then(informacionClima => {
+      console.log("🌤️ PRONÓSTICO RECIBIDO:");
+      console.log("------------------------");
+      console.log(informacionClima);
+      console.log("------------------------");
+    })
+    .catch(error => {
+      console.error("❌ No fue posible obtener el pronóstico:");
+      console.error(error);
+    });
+}
+
+consultarPronosticoDelTiempo();
