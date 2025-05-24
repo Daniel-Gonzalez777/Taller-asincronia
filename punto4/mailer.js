@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT),
   secure: true,
-  pool: true, 
+  pool: true,
   maxConnections: 5,
   maxMessages: 100,
   auth: {
@@ -30,4 +30,7 @@ async function sendEmail(to, subject, htmlContent) {
   }
 }
 
-module.exports = sendEmail;
+module.exports = {
+  sendEmail,
+  close: () => transporter.close()
+};
