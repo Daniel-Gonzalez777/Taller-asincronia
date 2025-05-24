@@ -1,8 +1,8 @@
 const sendEmail = require('./mailer');
 
 const recipients = [
-  'correo1@example.com',
-  'correo2@example.com',
+  'parapelixulascami@gmail.com',
+  'xarteagax123@gmail.com',
 ];
 
 const subject = 'Promoción especial 🚀';
