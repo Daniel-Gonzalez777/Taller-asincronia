@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gemini y Cohere API App</title>
+  <title>Gemini, Cohere y Mistral API App</title>
   <style>
     body {
       font-family: sans-serif;
@@ -76,9 +76,9 @@
 <body>
 
   <div class="container">
-    <h1>Consulta a Gemini y Cohere 🔍</h1>
-    <textarea id="inputText" placeholder="Escribe algo para preguntar a ambas IA..."></textarea>
-    <button onclick="sendToAIs()">Enviar a ambas IA</button>
+    <h1>Consulta a Gemini, Cohere y Mistral 🔍</h1>
+    <textarea id="inputText" placeholder="Escribe algo para preguntar a las IA..."></textarea>
+    <button onclick="sendToAIs()">Enviar a todas las IA</button>
     <div class="loader" id="loader"></div>
 
     <h2>Respuesta de Gemini:</h2>
@@ -86,6 +86,9 @@
 
     <h2>Respuesta de Cohere:</h2>
     <div class="responseContainer" id="responseCohere"></div>
+
+    <h2>Respuesta de Mistral:</h2>
+    <div class="responseContainer" id="responseMistral"></div>
   </div>
   <script src="script.js"></script>
 </body>
