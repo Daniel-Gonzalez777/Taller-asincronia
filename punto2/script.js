@@ -111,3 +111,74 @@ async function callTogether(text, apiKey) {
 }
 
 window.sendToAll = sendToAll;
+
+async function callGemini(text, apiKey) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const body = {
+        contents: [{ parts: [{ text }] }]
+    };
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        return data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta válida de Gemini.";
+    } catch {
+        return "Error al conectar con Gemini.";
+    }
+}
+
+async function callCohere(text, apiKey) {
+    const url = "https://api.cohere.ai/v1/chat";
+    const body = {
+        model: "command-r",
+        message: text,
+        chat_history: [],
+        temperature: 0.3
+    };
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`
+            },
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.reply) return data.reply;
+        if (data.text) return data.text;
+        if (Array.isArray(data.generations) && data.generations[0]?.text) return data.generations[0].text;
+        return "Respuesta sin texto útil de Cohere.";
+    } catch {
+        return "Error al conectar con Cohere.";
+    }
+}
+
+async function callTogether(text, apiKey) {
+    const url = "https://api.together.xyz/v1/chat/completions";
+    const body = {
+        model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        messages: [{ role: "user", content: text }],
+        temperature: 0.7
+    };
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`
+            },
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        return data?.choices?.[0]?.message?.content || "Sin respuesta válida de Together.";
+    } catch (err) {
+        console.error("Error en Together:", err);
+        return "Error al conectar con Together.";
+    }
+}
+
+window.sendToAll = sendToAll;
